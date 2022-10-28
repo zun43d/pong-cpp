@@ -1,4 +1,4 @@
-# pong
+# Pong (2019)
 
 A simple C++ clone of Pong.
 

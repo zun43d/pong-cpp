@@ -255,6 +255,44 @@ public:
         SDL_RenderFillRect(renderer, &rect);
     }
 
+    bool CheckCollision(const Ball& ball, Contact& contact) const
+    {
+        float ballLeft = ball.position.x;
+        float ballRight = ball.position.x + BALL_WIDTH;
+        float ballTop = ball.position.y;
+        float ballBottom = ball.position.y + BALL_HEIGHT;
+
+        float obstacleLeft = position.x;
+        float obstacleRight = position.x + PADDLE_WIDTH;
+        float obstacleTop = position.y;
+        float obstacleBottom = position.y + PADDLE_HEIGHT;
+
+        if (ballLeft >= obstacleRight || ballRight <= obstacleLeft || ballTop >= obstacleBottom || ballBottom <= obstacleTop)
+        {
+            return false;
+        }
+
+        if (ball.velocity.x < 0)
+        {
+            contact.penetration = obstacleRight - ballLeft;
+        }
+        else if (ball.velocity.x > 0)
+        {
+            contact.penetration = obstacleLeft - ballRight;
+        }
+
+        if (ball.velocity.y < 0)
+        {
+            contact.penetration = obstacleBottom - ballTop;
+        }
+        else if (ball.velocity.y > 0)
+        {
+            contact.penetration = obstacleTop - ballBottom;
+        }
+
+        return true;
+    }
+
     Vec2 position;
     SDL_Rect rect{};
 };
@@ -416,8 +454,8 @@ int main()
 
 		// Create the obstacles
 		std::vector<Obstacle> obstacles = {
-		    Obstacle(Vec2(WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 4.0f)),
-		    Obstacle(Vec2(WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f)),
+		    Obstacle(Vec2(WINDOW_WIDTH / 1.5f, WINDOW_HEIGHT / 4.0f)),
+		    Obstacle(Vec2(WINDOW_WIDTH / 2.5f, WINDOW_HEIGHT / 2.0f)),
 		    Obstacle(Vec2(WINDOW_WIDTH / 2.0f, 3 * WINDOW_HEIGHT / 4.0f))
 		};
 
@@ -560,6 +598,16 @@ int main()
 				}
 			}
 
+			// Check for collisions with obstacles
+			for (const auto& obstacle : obstacles)
+			{
+				Contact contact;
+				if (obstacle.CheckCollision(ball, contact))
+				{
+					ball.velocity.x = -ball.velocity.x;
+					ball.velocity.y = -ball.velocity.y;
+				}
+			}
 
 			// Clear the window to black
 			SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);

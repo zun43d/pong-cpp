@@ -5,6 +5,7 @@
 #include <SDL2/SDL_image.h>
 #include <string>
 #include <iostream>
+#include <vector>
 
 
 const int WINDOW_WIDTH = 1280;
@@ -237,6 +238,27 @@ public:
 	SDL_Rect rect{};
 };
 
+class Obstacle
+{
+public:
+    Obstacle(Vec2 position)
+        : position(position)
+    {
+        rect.x = static_cast<int>(position.x);
+        rect.y = static_cast<int>(position.y);
+        rect.w = PADDLE_WIDTH;
+        rect.h = PADDLE_HEIGHT;
+    }
+
+    void Draw(SDL_Renderer* renderer) const
+    {
+        SDL_RenderFillRect(renderer, &rect);
+    }
+
+    Vec2 position;
+    SDL_Rect rect{};
+};
+
 Contact CheckPaddleCollision(Ball const& ball, Paddle const& paddle)
 {
 	float ballLeft = ball.position.x;
@@ -390,6 +412,14 @@ int main()
 		Paddle paddleTwo(
 			Vec2(WINDOW_WIDTH - 50.0f, WINDOW_HEIGHT / 2.0f),
 			Vec2(0.0f, 0.0f));
+
+
+		// Create the obstacles
+		std::vector<Obstacle> obstacles = {
+		    Obstacle(Vec2(WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 4.0f)),
+		    Obstacle(Vec2(WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f)),
+		    Obstacle(Vec2(WINDOW_WIDTH / 2.0f, 3 * WINDOW_HEIGHT / 4.0f))
+		};
 
 
 		int playerOneScore = 0;
@@ -557,6 +587,12 @@ int main()
 			// Draw the paddles
 			paddleOne.Draw(renderer);
 			paddleTwo.Draw(renderer);
+
+			 // Draw the obstacles
+			for (const auto& obstacle : obstacles)
+			{
+					obstacle.Draw(renderer);
+			}
 
 			// Display the scores
 			playerOneScoreText.Draw();

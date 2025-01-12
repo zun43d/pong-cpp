@@ -605,7 +605,8 @@ int main()
 				if (obstacle.CheckCollision(ball, contact))
 				{
 					ball.velocity.x = -ball.velocity.x;
-					ball.velocity.y = -ball.velocity.y;
+					// ball.velocity.y = -ball.velocity.y;
+					ball.velocity.y = -0.75f * BALL_SPEED;
 				}
 			}
 

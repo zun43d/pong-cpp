@@ -2,7 +2,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_image.h>
 #include <string>
+#include <iostream>
 
 
 const int WINDOW_WIDTH = 1280;
@@ -344,6 +346,19 @@ int main()
 	SDL_Window* window = SDL_CreateWindow("Pong", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
 
+	// Load the background image
+	SDL_Surface* bgSurface = IMG_Load("bg.jpeg");
+	if (!bgSurface) {
+	    std::cerr << "Failed to load background image: " << IMG_GetError() << std::endl;
+	    return -1;
+	}
+
+	SDL_Texture* bgTexture = SDL_CreateTextureFromSurface(renderer, bgSurface);
+	SDL_FreeSurface(bgSurface);
+	if (!bgTexture) {
+	    std::cerr << "Failed to create texture from surface: " << SDL_GetError() << std::endl;
+	    return -1;
+	}
 
 	// Initialize the font
 	TTF_Font* scoreFont = TTF_OpenFont("DejaVuSansMono.ttf", 40);
@@ -523,6 +538,8 @@ int main()
 			// Set the draw color to be white
 			SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
+			// Draw the background
+			SDL_RenderCopy(renderer, bgTexture, nullptr, nullptr);
 
 			// Draw the net
 			for (int y = 0; y < WINDOW_HEIGHT; ++y)
@@ -558,6 +575,7 @@ int main()
 
 	Mix_FreeChunk(wallHitSound);
 	Mix_FreeChunk(paddleHitSound);
+	SDL_DestroyTexture(bgTexture);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	TTF_CloseFont(scoreFont);

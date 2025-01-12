@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/zun43d/CodeSpace/2019-pong/build",
+  "command": "/usr/bin/g++ -isystem /usr/include/SDL2 -g -std=c++17 -o CMakeFiles/pong.dir/Main.cpp.o -c /home/zun43d/CodeSpace/2019-pong/Main.cpp",
+  "file": "/home/zun43d/CodeSpace/2019-pong/Main.cpp",
+  "output": "CMakeFiles/pong.dir/Main.cpp.o"
+}
+]

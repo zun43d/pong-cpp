@@ -6,6 +6,8 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 
 
 const int WINDOW_WIDTH = 1280;
@@ -395,6 +397,20 @@ Contact CheckWallCollision(Ball const& ball)
 	return contact;
 }
 
+std::vector<Obstacle> generateRandomObstacles()
+{
+    int numObstacles = std::rand() % 4 + 1; // Random number between 1 and 4
+    std::vector<Obstacle> obstacles;
+
+    for (int i = 0; i < numObstacles; ++i)
+    {
+        float x = static_cast<float>(std::rand() % (WINDOW_WIDTH - PADDLE_WIDTH));
+        float y = static_cast<float>(std::rand() % (WINDOW_HEIGHT - PADDLE_HEIGHT));
+        obstacles.emplace_back(Vec2(x, y));
+    }
+
+    return obstacles;
+}
 
 int main()
 {
@@ -428,6 +444,9 @@ int main()
 	Mix_Chunk* wallHitSound = Mix_LoadWAV("WallHit.wav");
 	Mix_Chunk* paddleHitSound = Mix_LoadWAV("PaddleHit.wav");
 
+	// Initialize random seed
+	std::srand(static_cast<unsigned>(std::time(nullptr)));
+
 	// Game logic
 	{
 		// Create the player score text fields
@@ -453,11 +472,7 @@ int main()
 
 
 		// Create the obstacles
-		std::vector<Obstacle> obstacles = {
-		    Obstacle(Vec2(WINDOW_WIDTH / 1.5f, WINDOW_HEIGHT / 4.0f)),
-		    Obstacle(Vec2(WINDOW_WIDTH / 2.5f, WINDOW_HEIGHT / 2.0f)),
-		    Obstacle(Vec2(WINDOW_WIDTH / 2.0f, 3 * WINDOW_HEIGHT / 4.0f))
-		};
+		std::vector<Obstacle> obstacles = generateRandomObstacles();
 
 
 		int playerOneScore = 0;
@@ -585,12 +600,14 @@ int main()
 					++playerTwoScore;
 
 					playerTwoScoreText.SetScore(playerTwoScore);
+					obstacles = generateRandomObstacles();
 				}
 				else if (contact.type == CollisionType::Right)
 				{
 					++playerOneScore;
 
 					playerOneScoreText.SetScore(playerOneScore);
+					obstacles = generateRandomObstacles();
 				}
 				else
 				{

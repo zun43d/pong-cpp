@@ -404,7 +404,7 @@ std::vector<Obstacle> generateRandomObstacles()
 
     for (int i = 0; i < numObstacles; ++i)
     {
-        float x = static_cast<float>(std::rand() % (WINDOW_WIDTH - PADDLE_WIDTH));
+        float x = static_cast<float>(std::rand() % (WINDOW_WIDTH - 400 - PADDLE_WIDTH) + 200);
         float y = static_cast<float>(std::rand() % (WINDOW_HEIGHT - PADDLE_HEIGHT));
         obstacles.emplace_back(Vec2(x, y));
     }

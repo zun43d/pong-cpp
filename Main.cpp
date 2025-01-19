@@ -412,6 +412,22 @@ std::vector<Obstacle> generateRandomObstacles()
     return obstacles;
 }
 
+void DisplayWinner(SDL_Renderer* renderer, TTF_Font* font, const std::string& winner)
+{
+	SDL_Surface* surface = TTF_RenderText_Solid(font, winner.c_str(), {0xFF, 0xFF, 0xFF, 0xFF});
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+	int width, height;
+	SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+	SDL_Rect rect = {WINDOW_WIDTH / 2 - width / 2, WINDOW_HEIGHT / 2 - height / 2, width, height};
+
+	SDL_RenderCopy(renderer, texture, nullptr, &rect);
+	SDL_RenderPresent(renderer);
+
+	SDL_FreeSurface(surface);
+	SDL_DestroyTexture(texture);
+}
+
 int main()
 {
 	// Initialize SDL components
@@ -601,6 +617,13 @@ int main()
 
 					playerTwoScoreText.SetScore(playerTwoScore);
 					obstacles = generateRandomObstacles();
+
+					if (playerTwoScore >= 20)
+					{
+						DisplayWinner(renderer, scoreFont, "Player 2 Wins!");
+						SDL_Delay(3000); // Display the winner for 3 seconds
+						running = false;
+					}
 				}
 				else if (contact.type == CollisionType::Right)
 				{
@@ -608,6 +631,13 @@ int main()
 
 					playerOneScoreText.SetScore(playerOneScore);
 					obstacles = generateRandomObstacles();
+
+					if (playerOneScore >= 20)
+					{
+						DisplayWinner(renderer, scoreFont, "Player 1 Wins!");
+						SDL_Delay(10000); // Display the winner for 3 seconds
+						running = false;
+					}
 				}
 				else
 				{

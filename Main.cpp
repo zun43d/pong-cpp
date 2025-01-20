@@ -428,6 +428,24 @@ void DisplayWinner(SDL_Renderer* renderer, TTF_Font* font, const std::string& wi
 	SDL_DestroyTexture(texture);
 }
 
+void DrawBall(SDL_Renderer* renderer, Ball& ball)
+{
+	SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF); // Red color
+	ball.Draw(renderer);
+}
+
+void DrawPaddle(SDL_Renderer* renderer, Paddle& paddle)
+{
+	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF); // Blue color
+	paddle.Draw(renderer);
+}
+
+void DrawObstacle(SDL_Renderer* renderer, const Obstacle& obstacle)
+{
+	SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0x00, 0xFF); // Green color
+	obstacle.Draw(renderer);
+}
+
 int main()
 {
 	// Initialize SDL components
@@ -678,16 +696,16 @@ int main()
 
 
 			// Draw the ball
-			ball.Draw(renderer);
+			DrawBall(renderer, ball);
 
 			// Draw the paddles
-			paddleOne.Draw(renderer);
-			paddleTwo.Draw(renderer);
+			DrawPaddle(renderer, paddleOne);
+			DrawPaddle(renderer, paddleTwo);
 
 			 // Draw the obstacles
 			for (const auto& obstacle : obstacles)
 			{
-					obstacle.Draw(renderer);
+					DrawObstacle(renderer, obstacle);
 			}
 
 			// Display the scores

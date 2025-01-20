@@ -516,38 +516,38 @@ int main()
 					{
 						running = false;
 					}
-					else if (event.key.keysym.sym == SDLK_q)
+					else if (event.key.keysym.sym == SDLK_z)
 					{
 						buttons[Buttons::PaddleOneUp] = true;
 					}
-					else if (event.key.keysym.sym == SDLK_z)
+					else if (event.key.keysym.sym == SDLK_x)
 					{
 						buttons[Buttons::PaddleOneDown] = true;
 					}
-					else if (event.key.keysym.sym == SDLK_KP_8)
+					else if (event.key.keysym.sym == SDLK_9)
 					{
 						buttons[Buttons::PaddleTwoUp] = true;
 					}
-					else if (event.key.keysym.sym == SDLK_KP_2)
+					else if (event.key.keysym.sym == SDLK_0)
 					{
 						buttons[Buttons::PaddleTwoDown] = true;
 					}
 				}
 				else if (event.type == SDL_KEYUP)
 				{
-					if (event.key.keysym.sym == SDLK_q)
+					if (event.key.keysym.sym == SDLK_z)
 					{
 						buttons[Buttons::PaddleOneUp] = false;
 					}
-					else if (event.key.keysym.sym == SDLK_z)
+					else if (event.key.keysym.sym == SDLK_x)
 					{
 						buttons[Buttons::PaddleOneDown] = false;
 					}
-					else if (event.key.keysym.sym == SDLK_KP_8)
+					else if (event.key.keysym.sym == SDLK_9)
 					{
 						buttons[Buttons::PaddleTwoUp] = false;
 					}
-					else if (event.key.keysym.sym == SDLK_KP_2)
+					else if (event.key.keysym.sym == SDLK_0)
 					{
 						buttons[Buttons::PaddleTwoDown] = false;
 					}

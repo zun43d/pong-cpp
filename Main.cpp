@@ -516,38 +516,38 @@ int main()
 					{
 						running = false;
 					}
-					else if (event.key.keysym.sym == SDLK_w)
+					else if (event.key.keysym.sym == SDLK_q)
 					{
 						buttons[Buttons::PaddleOneUp] = true;
 					}
-					else if (event.key.keysym.sym == SDLK_s)
+					else if (event.key.keysym.sym == SDLK_z)
 					{
 						buttons[Buttons::PaddleOneDown] = true;
 					}
-					else if (event.key.keysym.sym == SDLK_UP)
+					else if (event.key.keysym.sym == SDLK_KP_8)
 					{
 						buttons[Buttons::PaddleTwoUp] = true;
 					}
-					else if (event.key.keysym.sym == SDLK_DOWN)
+					else if (event.key.keysym.sym == SDLK_KP_2)
 					{
 						buttons[Buttons::PaddleTwoDown] = true;
 					}
 				}
 				else if (event.type == SDL_KEYUP)
 				{
-					if (event.key.keysym.sym == SDLK_w)
+					if (event.key.keysym.sym == SDLK_q)
 					{
 						buttons[Buttons::PaddleOneUp] = false;
 					}
-					else if (event.key.keysym.sym == SDLK_s)
+					else if (event.key.keysym.sym == SDLK_z)
 					{
 						buttons[Buttons::PaddleOneDown] = false;
 					}
-					else if (event.key.keysym.sym == SDLK_UP)
+					else if (event.key.keysym.sym == SDLK_KP_8)
 					{
 						buttons[Buttons::PaddleTwoUp] = false;
 					}
-					else if (event.key.keysym.sym == SDLK_DOWN)
+					else if (event.key.keysym.sym == SDLK_KP_2)
 					{
 						buttons[Buttons::PaddleTwoDown] = false;
 					}
